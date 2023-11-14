@@ -29,13 +29,12 @@ class SkinRenderer(val uuid: UUID?, val name: String) : AutoCloseable {
 
             skinData.textures.skin
         } catch (e: IllegalStateException) {
-            e.printStackTrace()
             null
         }
         texture = if (skin == null) {
             textureWidth = PlayerSkinDrawer.SKIN_TEXTURE_WIDTH
             textureHeight = PlayerSkinDrawer.SKIN_TEXTURE_HEIGHT
-            TextureIdentifier(DefaultSkinHelper.getTexture(uuid).texture)
+            TextureIdentifier(DefaultSkinHelper.getSkinTextures(uuid).texture)
         } else {
             val conn = URL(skin.url).openConnection()
             conn.connect()
