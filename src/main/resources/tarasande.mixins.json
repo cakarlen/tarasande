@@ -79,6 +79,7 @@
     "feature.module.entity.MixinLivingEntity",
     "feature.module.entity.MixinLivingEntityRenderer",
     "feature.module.entity.MixinPlayerEntity",
+    "feature.module.entity.MixinMerchantScreen",
     "feature.module.entity.entitycontrol.MixinAbstractHorseEntity",
     "feature.module.entity.entitycontrol.MixinPigEntity",
     "feature.module.entity.entitycontrol.MixinStriderEntity",

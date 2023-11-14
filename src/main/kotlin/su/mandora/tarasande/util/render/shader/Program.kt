@@ -23,9 +23,9 @@ class Program(vararg shaders: Shader): AutoCloseable {
         GlStateManager.glLinkProgram(programId)
         if (GlStateManager.glGetProgrami(programId, GlConst.GL_LINK_STATUS) != GlConst.GL_TRUE)
             error(GlStateManager.glGetProgramInfoLog(programId, Int.MAX_VALUE))
-        GL20.glValidateProgram(programId)
-        if (GlStateManager.glGetProgrami(programId, GL20.GL_VALIDATE_STATUS) != GlConst.GL_TRUE)
-            error(GlStateManager.glGetProgramInfoLog(programId, Int.MAX_VALUE))
+//        GL20.glValidateProgram(programId)
+//        if (GlStateManager.glGetProgrami(programId, GL20.GL_VALIDATE_STATUS) != GlConst.GL_TRUE)
+//            error(GlStateManager.glGetProgramInfoLog(programId, Int.MAX_VALUE))
         for (shader in shaders)
             shader.close()
     }

@@ -15,6 +15,7 @@ import su.mandora.tarasande.system.base.valuesystem.impl.ValueBoolean
 import su.mandora.tarasande.system.base.valuesystem.impl.ValueColor
 import su.mandora.tarasande.system.base.valuesystem.impl.ValueMode
 import su.mandora.tarasande.system.base.valuesystem.impl.ValueRegistry
+import su.mandora.tarasande.system.feature.modulesystem.ManagerModule
 import su.mandora.tarasande.system.feature.modulesystem.Module
 import su.mandora.tarasande.system.feature.modulesystem.ModuleCategory
 import su.mandora.tarasande.util.extension.minecraft.math.unaryMinus
@@ -49,14 +50,17 @@ class ModuleBlockESP : Module("Block ESP", "Highlights blocks through walls", Mo
     }
 
     var list = CopyOnWriteArrayList<Pair<BlockPos, BlockState>>()
+    private val moduleFullBright by lazy { ManagerModule.get(ModuleFullBright::class.java) }
 
     override fun onEnable() {
         mc.worldRenderer.reload()
+        if (!moduleFullBright.enabled.value) moduleFullBright.onEnable()
     }
 
     override fun onDisable() {
         list = CopyOnWriteArrayList()
         mc.worldRenderer.reload()
+        if (moduleFullBright.enabled.value) moduleFullBright.onDisable()
     }
 
     private fun BlockPos.allSurroundings(): ArrayList<BlockPos> {

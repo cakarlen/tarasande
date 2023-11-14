@@ -134,6 +134,7 @@ object ManagerModule : Manager<Module>() {
             ModuleNoPitchLimit(),
             ModuleRegen(),
             ModulePingSpoof(),
+            ModuleAutoTrade(),
 
             // Ghost
             ModuleReach(),
