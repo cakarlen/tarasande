@@ -2,6 +2,7 @@ package su.mandora.tarasande.system.base.valuesystem.impl
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
+import net.minecraft.block.Block
 import net.minecraft.registry.Registry
 import su.mandora.tarasande.system.base.valuesystem.Value
 import su.mandora.tarasande.system.base.valuesystem.valuecomponent.impl.focusable.impl.ElementWidthValueComponentFocusableRegistry
@@ -26,6 +27,14 @@ abstract class ValueRegistry<T>(
     }
 
     fun isSelected(key: Any?) = list.contains(key)
+
+    fun clear() {
+        list.clear()
+    }
+
+    fun contains(block: T): Boolean {
+        return list.contains(block)
+    }
 
     fun add(wrappedKey: WrappedKey<*>) {
         @Suppress("UNCHECKED_CAST")

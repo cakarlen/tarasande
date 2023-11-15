@@ -1,14 +1,14 @@
 package su.mandora.tarasande.system.feature.modulesystem.impl.player
 
 import net.minecraft.block.Block
+import net.minecraft.block.BlockState
 import net.minecraft.registry.Registries
+import net.minecraft.registry.Registries.BLOCK
 import net.minecraft.util.hit.BlockHitResult
+import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
-import su.mandora.tarasande.event.impl.EventAttack
-import su.mandora.tarasande.event.impl.EventHandleBlockBreaking
-import su.mandora.tarasande.event.impl.EventRotation
-import su.mandora.tarasande.event.impl.EventSwing
+import su.mandora.tarasande.event.impl.*
 import su.mandora.tarasande.feature.rotation.api.RotationUtil
 import su.mandora.tarasande.mc
 import su.mandora.tarasande.system.base.valuesystem.impl.ValueMode
@@ -23,10 +23,12 @@ import su.mandora.tarasande.util.extension.minecraft.math.BlockPos
 import su.mandora.tarasande.util.math.time.TimeUtil
 import su.mandora.tarasande.util.maxReach
 import su.mandora.tarasande.util.player.PlayerUtil
+import su.mandora.tarasande.util.player.chat.CustomChat
 import kotlin.math.ceil
 import kotlin.math.floor
 import kotlin.math.min
 import kotlin.math.pow
+
 
 class ModuleNuker : Module("Nuker", "Destroys certain blocks in a certain radius", ModuleCategory.PLAYER) {
 
@@ -64,6 +66,16 @@ class ModuleNuker : Module("Nuker", "Destroys certain blocks in a certain radius
     override fun onDisable() {
         list.clearAndGC()
         breaking = false
+        includedBlocks.clear()
+    }
+
+    fun getState(pos: BlockPos): BlockState? {
+        return mc.world?.getBlockState(pos);
+    }
+
+    fun getBlock(pos: BlockPos): Block?
+    {
+        return getState(pos)?.block;
     }
 
     init {
@@ -154,6 +166,19 @@ class ModuleNuker : Module("Nuker", "Destroys certain blocks in a certain radius
 
         registerEvent(EventHandleBlockBreaking::class.java) { event ->
             event.parameter = event.parameter || (breaking && mc.attackCooldown == 0)
+        }
+
+        registerEvent(EventInteractBlock::class.java) { event ->
+            if (event.hitResult.type != HitResult.Type.BLOCK) return@registerEvent
+            if (getBlock(event.hitResult.blockPos)?.let { includedBlocks.contains(it) }!!) return@registerEvent
+
+            val block = getBlock(event.hitResult.blockPos)
+            val blockName = BLOCK.getId(block).toShortTranslationKey();
+
+            if (block != null) {
+                CustomChat.printChatMessage("You have added $blockName to Nuker.")
+                includedBlocks.add(block)
+            }
         }
     }
 }

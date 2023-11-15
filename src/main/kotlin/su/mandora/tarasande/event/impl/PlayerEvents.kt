@@ -4,6 +4,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
 import net.minecraft.util.Hand
+import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
@@ -89,7 +90,7 @@ class EventChat(val chatMessage: String) : Event(true)
 class EventSwing(var hand: Hand) : Event(true)
 class EventEntityHurt(val entity: Entity) : Event(false)
 class EventIsWalkingForward(var walksForward: Boolean) : Event(false)
-
+class EventInteractBlock(val hand: Hand, val hitResult: BlockHitResult) : Event(cancellable = true)
 class EventVelocityMultiplier : Event {
     var dirty = false
         private set

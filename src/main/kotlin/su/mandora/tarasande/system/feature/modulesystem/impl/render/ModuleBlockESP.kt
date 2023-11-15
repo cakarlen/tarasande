@@ -54,13 +54,13 @@ class ModuleBlockESP : Module("Block ESP", "Highlights blocks through walls", Mo
 
     override fun onEnable() {
         mc.worldRenderer.reload()
-        if (!moduleFullBright.enabled.value) moduleFullBright.onEnable()
+//        if (!moduleFullBright.enabled.value) moduleFullBright.onEnable()
     }
 
     override fun onDisable() {
         list = CopyOnWriteArrayList()
         mc.worldRenderer.reload()
-        if (moduleFullBright.enabled.value) moduleFullBright.onDisable()
+//        if (moduleFullBright.enabled.value) moduleFullBright.onDisable()
     }
 
     private fun BlockPos.allSurroundings(): ArrayList<BlockPos> {
