@@ -601,6 +601,12 @@ class ModuleKillAura : Module("Kill aura", "Automatically attacks near players",
             }
         }
 
+        if (entity is PlayerEntity) {
+            if (entity.isCreative) {
+                return false
+            }
+        }
+
         if (SmartClickingBehaviour.enableSmartClickingBehaviour.value && entity is LivingEntity) {
             val otherHurtTime = entity.smoothedHurtTime()
             // Is the enemy attackable?

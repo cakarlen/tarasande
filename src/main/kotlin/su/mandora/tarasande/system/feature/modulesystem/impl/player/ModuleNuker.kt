@@ -4,6 +4,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registries.BLOCK
+import net.minecraft.text.Text
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.BlockPos
@@ -173,7 +174,7 @@ class ModuleNuker : Module("Nuker", "Destroys certain blocks in a certain radius
             if (getBlock(event.hitResult.blockPos)?.let { includedBlocks.contains(it) }!!) return@registerEvent
 
             val block = getBlock(event.hitResult.blockPos)
-            val blockName = BLOCK.getId(block).toShortTranslationKey();
+            val blockName = Text.translatable(BLOCK.getId(block).toTranslationKey())
 
             if (block != null) {
                 CustomChat.printChatMessage("You have added $blockName to Nuker.")

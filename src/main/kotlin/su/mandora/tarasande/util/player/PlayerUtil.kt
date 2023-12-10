@@ -4,6 +4,8 @@ import net.minecraft.client.gui.screen.ChatScreen
 import net.minecraft.client.gui.screen.GameMenuScreen
 import net.minecraft.entity.Entity
 import net.minecraft.entity.effect.StatusEffects
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
 import net.minecraft.util.Hand
 import net.minecraft.util.UseAction
 import net.minecraft.util.hit.BlockHitResult
@@ -28,6 +30,9 @@ import su.mandora.tarasande.system.feature.modulesystem.ManagerModule
 import su.mandora.tarasande.system.feature.modulesystem.impl.player.ModuleAutoTool
 import su.mandora.tarasande.util.DEFAULT_WALK_SPEED
 import su.mandora.tarasande.util.extension.minecraft.isBlockHitResult
+import su.mandora.tarasande.util.player.inventory.FindItemResult
+import java.util.function.Predicate
+
 
 object PlayerUtil {
 
@@ -173,6 +178,21 @@ object PlayerUtil {
             it.init(mc, mc.window.scaledWidth, mc.window.scaledHeight)
             block(it)
         }
+    }
+
+    @JvmStatic
+    fun find(item: Item): FindItemResult {
+        if (mc.player == null) return FindItemResult(0, 0)
+        var slot = -1
+        var count = 0
+        for (i in 0 .. mc.player!!.inventory.size()) {
+            val stack = mc.player!!.inventory.getStack(i)
+            if (stack.item == item) {
+                if (slot == -1) slot = i
+                count += stack.count
+            }
+        }
+        return FindItemResult(slot, count)
     }
 
     fun sendChatMessage(text: String, bypassEvent: Boolean) {
